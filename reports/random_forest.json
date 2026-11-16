@@ -1,0 +1,556 @@
+{
+  "model": "random_forest",
+  "model_version": "20261116T145328093387Z-4b15c8e0",
+  "prediction_mode": "EXPERIMENTAL",
+  "created_at": "2026-11-16T14:53:28.093387+00:00",
+  "dataset": "UCI 697",
+  "dataset_sha256": "4b15c8e0b1fc9ea1e7994caaff47db72c07e0049bf9e47758aa53c2fc7fd6376",
+  "seed": 42,
+  "sklearn_version": "1.8.0",
+  "features": [
+    "Marital Status",
+    "Application mode",
+    "Application order",
+    "Course",
+    "Daytime/evening attendance",
+    "Previous qualification",
+    "Previous qualification (grade)",
+    "Nacionality",
+    "Mother's qualification",
+    "Father's qualification",
+    "Mother's occupation",
+    "Father's occupation",
+    "Admission grade",
+    "Displaced",
+    "Educational special needs",
+    "Debtor",
+    "Tuition fees up to date",
+    "Gender",
+    "Scholarship holder",
+    "Age at enrollment",
+    "International",
+    "Curricular units 1st sem (credited)",
+    "Curricular units 1st sem (enrolled)",
+    "Curricular units 1st sem (evaluations)",
+    "Curricular units 1st sem (approved)",
+    "Curricular units 1st sem (grade)",
+    "Curricular units 1st sem (without evaluations)",
+    "Curricular units 2nd sem (credited)",
+    "Curricular units 2nd sem (enrolled)",
+    "Curricular units 2nd sem (evaluations)",
+    "Curricular units 2nd sem (approved)",
+    "Curricular units 2nd sem (grade)",
+    "Curricular units 2nd sem (without evaluations)",
+    "Unemployment rate",
+    "Inflation rate",
+    "GDP"
+  ],
+  "schema": {
+    "Marital Status": {
+      "integer": true,
+      "min": 1.0,
+      "max": 6.0,
+      "categories": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "Application mode": {
+      "integer": true,
+      "min": 1.0,
+      "max": 57.0,
+      "categories": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        15,
+        16,
+        17,
+        18,
+        26,
+        27,
+        39,
+        42,
+        43,
+        44,
+        51,
+        53,
+        57
+      ]
+    },
+    "Application order": {
+      "integer": true,
+      "min": 0.0,
+      "max": 9.0,
+      "categories": null
+    },
+    "Course": {
+      "integer": true,
+      "min": 33.0,
+      "max": 9991.0,
+      "categories": [
+        33,
+        171,
+        8014,
+        9003,
+        9070,
+        9085,
+        9119,
+        9130,
+        9147,
+        9238,
+        9254,
+        9500,
+        9556,
+        9670,
+        9773,
+        9853,
+        9991
+      ]
+    },
+    "Daytime/evening attendance": {
+      "integer": true,
+      "min": 0.0,
+      "max": 1.0,
+      "categories": [
+        0,
+        1
+      ]
+    },
+    "Previous qualification": {
+      "integer": true,
+      "min": 1.0,
+      "max": 43.0,
+      "categories": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        12,
+        14,
+        15,
+        19,
+        38,
+        39,
+        40,
+        42,
+        43
+      ]
+    },
+    "Previous qualification (grade)": {
+      "integer": false,
+      "min": 95.0,
+      "max": 190.0,
+      "categories": null
+    },
+    "Nacionality": {
+      "integer": true,
+      "min": 1.0,
+      "max": 109.0,
+      "categories": [
+        1,
+        2,
+        6,
+        11,
+        13,
+        14,
+        17,
+        21,
+        22,
+        24,
+        25,
+        26,
+        32,
+        41,
+        62,
+        100,
+        101,
+        103,
+        105,
+        108,
+        109
+      ]
+    },
+    "Mother's qualification": {
+      "integer": true,
+      "min": 1.0,
+      "max": 44.0,
+      "categories": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        11,
+        12,
+        14,
+        18,
+        19,
+        22,
+        26,
+        27,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "Father's qualification": {
+      "integer": true,
+      "min": 1.0,
+      "max": 44.0,
+      "categories": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        18,
+        19,
+        20,
+        22,
+        25,
+        26,
+        27,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "Mother's occupation": {
+      "integer": true,
+      "min": 0.0,
+      "max": 194.0,
+      "categories": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        90,
+        99,
+        122,
+        123,
+        125,
+        131,
+        132,
+        134,
+        141,
+        143,
+        144,
+        151,
+        152,
+        153,
+        171,
+        173,
+        175,
+        191,
+        192,
+        193,
+        194
+      ]
+    },
+    "Father's occupation": {
+      "integer": true,
+      "min": 0.0,
+      "max": 195.0,
+      "categories": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        90,
+        99,
+        101,
+        102,
+        103,
+        112,
+        114,
+        121,
+        122,
+        123,
+        124,
+        131,
+        132,
+        134,
+        135,
+        141,
+        143,
+        144,
+        151,
+        152,
+        153,
+        154,
+        161,
+        163,
+        171,
+        172,
+        174,
+        175,
+        181,
+        182,
+        183,
+        192,
+        193,
+        194,
+        195
+      ]
+    },
+    "Admission grade": {
+      "integer": false,
+      "min": 95.0,
+      "max": 190.0,
+      "categories": null
+    },
+    "Displaced": {
+      "integer": true,
+      "min": 0.0,
+      "max": 1.0,
+      "categories": [
+        0,
+        1
+      ]
+    },
+    "Educational special needs": {
+      "integer": true,
+      "min": 0.0,
+      "max": 1.0,
+      "categories": [
+        0,
+        1
+      ]
+    },
+    "Debtor": {
+      "integer": true,
+      "min": 0.0,
+      "max": 1.0,
+      "categories": [
+        0,
+        1
+      ]
+    },
+    "Tuition fees up to date": {
+      "integer": true,
+      "min": 0.0,
+      "max": 1.0,
+      "categories": [
+        0,
+        1
+      ]
+    },
+    "Gender": {
+      "integer": true,
+      "min": 0.0,
+      "max": 1.0,
+      "categories": [
+        0,
+        1
+      ]
+    },
+    "Scholarship holder": {
+      "integer": true,
+      "min": 0.0,
+      "max": 1.0,
+      "categories": [
+        0,
+        1
+      ]
+    },
+    "Age at enrollment": {
+      "integer": true,
+      "min": 17.0,
+      "max": 70.0,
+      "categories": null
+    },
+    "International": {
+      "integer": true,
+      "min": 0.0,
+      "max": 1.0,
+      "categories": [
+        0,
+        1
+      ]
+    },
+    "Curricular units 1st sem (credited)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 20.0,
+      "categories": null
+    },
+    "Curricular units 1st sem (enrolled)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 26.0,
+      "categories": null
+    },
+    "Curricular units 1st sem (evaluations)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 45.0,
+      "categories": null
+    },
+    "Curricular units 1st sem (approved)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 26.0,
+      "categories": null
+    },
+    "Curricular units 1st sem (grade)": {
+      "integer": false,
+      "min": 0.0,
+      "max": 18.875,
+      "categories": null
+    },
+    "Curricular units 1st sem (without evaluations)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 12.0,
+      "categories": null
+    },
+    "Curricular units 2nd sem (credited)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 19.0,
+      "categories": null
+    },
+    "Curricular units 2nd sem (enrolled)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 23.0,
+      "categories": null
+    },
+    "Curricular units 2nd sem (evaluations)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 33.0,
+      "categories": null
+    },
+    "Curricular units 2nd sem (approved)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 20.0,
+      "categories": null
+    },
+    "Curricular units 2nd sem (grade)": {
+      "integer": false,
+      "min": 0.0,
+      "max": 18.57142857,
+      "categories": null
+    },
+    "Curricular units 2nd sem (without evaluations)": {
+      "integer": true,
+      "min": 0.0,
+      "max": 12.0,
+      "categories": null
+    },
+    "Unemployment rate": {
+      "integer": false,
+      "min": 7.6,
+      "max": 16.2,
+      "categories": null
+    },
+    "Inflation rate": {
+      "integer": false,
+      "min": -0.8,
+      "max": 3.7,
+      "categories": null
+    },
+    "GDP": {
+      "integer": false,
+      "min": -4.06,
+      "max": 3.51,
+      "categories": null
+    }
+  },
+  "metrics": {
+    "accuracy": 0.9214876033057852,
+    "precision": 0.9283018867924528,
+    "recall": 0.8661971830985915,
+    "f1": 0.8961748633879781,
+    "roc_auc": 0.9710781658275446,
+    "confusion_matrix": [
+      [
+        423,
+        19
+      ],
+      [
+        38,
+        246
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "Graduate (0)",
+      "Dropout (1)"
+    ],
+    "train_rows": 2904,
+    "test_rows": 726,
+    "class_distribution": {
+      "Dropout": 1421,
+      "Graduate": 2209
+    },
+    "train_class_distribution": {
+      "0": 1767,
+      "1": 1137
+    },
+    "test_class_distribution": {
+      "0": 442,
+      "1": 284
+    },
+    "excluded_enrolled": 794,
+    "evaluation": "Stratified random holdout; not temporal or external validation"
+  }
+}

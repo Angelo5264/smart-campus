@@ -1,0 +1,12 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+data/raw/*
+data/processed/*
+ml/artifacts/*
+!ml/artifacts/.gitkeep
+.agents/
+.aws/
+.codex/

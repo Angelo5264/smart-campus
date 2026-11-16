@@ -1,0 +1,82 @@
+{
+  "interpretation": "Perfiles, no niveles de riesgo",
+  "model_version": "20261116T145330814066Z-4b15c8e0",
+  "prediction_mode": "EXPERIMENTAL",
+  "profiles": [
+    {
+      "cluster": 0,
+      "count": 4144,
+      "course_counts": {
+        "171": 182,
+        "33": 9,
+        "8014": 180,
+        "9003": 167,
+        "9070": 206,
+        "9085": 316,
+        "9119": 169,
+        "9130": 138,
+        "9147": 353,
+        "9238": 336,
+        "9254": 245,
+        "9500": 753,
+        "9556": 86,
+        "9670": 265,
+        "9773": 329,
+        "9853": 182,
+        "9991": 228
+      },
+      "numeric_means": {
+        "Admission grade": 126.82367277992276,
+        "Curricular units 1st sem (approved)": 4.24203667953668,
+        "Curricular units 1st sem (credited)": 0.17253861003861004,
+        "Curricular units 1st sem (enrolled)": 5.801399613899614,
+        "Curricular units 1st sem (evaluations)": 7.735521235521236,
+        "Curricular units 1st sem (grade)": 10.505825348595561,
+        "Curricular units 1st sem (without evaluations)": 0.1180019305019305,
+        "Curricular units 2nd sem (approved)": 4.064671814671815,
+        "Curricular units 2nd sem (credited)": 0.12355212355212356,
+        "Curricular units 2nd sem (enrolled)": 5.875965250965251,
+        "Curricular units 2nd sem (evaluations)": 7.625965250965251,
+        "Curricular units 2nd sem (grade)": 10.065685403228764,
+        "Curricular units 2nd sem (without evaluations)": 0.14020270270270271
+      }
+    },
+    {
+      "cluster": 1,
+      "count": 280,
+      "course_counts": {
+        "171": 33,
+        "33": 3,
+        "8014": 35,
+        "9003": 43,
+        "9070": 20,
+        "9085": 21,
+        "9119": 1,
+        "9130": 3,
+        "9147": 27,
+        "9238": 19,
+        "9254": 7,
+        "9500": 13,
+        "9670": 3,
+        "9773": 2,
+        "9853": 10,
+        "9991": 40
+      },
+      "numeric_means": {
+        "Admission grade": 129.26392857142858,
+        "Curricular units 1st sem (approved)": 11.582142857142857,
+        "Curricular units 1st sem (credited)": 8.664285714285715,
+        "Curricular units 1st sem (enrolled)": 13.214285714285714,
+        "Curricular units 1st sem (evaluations)": 16.639285714285716,
+        "Curricular units 1st sem (grade)": 12.638765728607144,
+        "Curricular units 1st sem (without evaluations)": 0.42857142857142855,
+        "Curricular units 2nd sem (approved)": 9.928571428571429,
+        "Curricular units 2nd sem (credited)": 6.732142857142857,
+        "Curricular units 2nd sem (enrolled)": 11.503571428571428,
+        "Curricular units 2nd sem (evaluations)": 14.535714285714286,
+        "Curricular units 2nd sem (grade)": 12.665106451178572,
+        "Curricular units 2nd sem (without evaluations)": 0.3
+      }
+    }
+  ]
+}

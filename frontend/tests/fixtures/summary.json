@@ -1,0 +1,11 @@
+{
+  "cluster_assignments": 2,
+  "observed_targets": {
+    "Dropout": 1421,
+    "Enrolled": 794,
+    "Graduate": 2209
+  },
+  "prediction_mode": "EXPERIMENTAL",
+  "predictions": 2,
+  "students": 4424
+}

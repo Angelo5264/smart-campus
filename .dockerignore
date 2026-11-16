@@ -1,0 +1,12 @@
+.venv
+.git
+.env
+__pycache__
+.pytest_cache
+data
+ml/artifacts
+.agents
+.aws
+.codex
+reports
+frontend
