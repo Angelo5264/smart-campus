@@ -77,14 +77,3 @@ export function PageHeading({
     </div>
   );
 }
-export function Warning() {
-  return (
-    <div className="notice">
-      <FlaskConical size={19} />
-      <p>
-        Esta predicción es experimental y no está validada para instituciones de
-        educación superior de Piura. Requiere evaluación humana.
-      </p>
-    </div>
-  );
-}

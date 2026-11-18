@@ -1,5 +1,5 @@
 import type { Assignment, Prediction } from "../../types";
-import { Card, Experimental, Warning } from "./UI";
+import { Card, Experimental } from "./UI";
 import { dateTime, percent } from "../../utils/format";
 export function PredictionResult({ data }: { data: Prediction }) {
   return (
@@ -44,10 +44,6 @@ export function PredictionResult({ data }: { data: Prediction }) {
         {percent(data.thresholds.high)} · HIGH ≥ {percent(data.thresholds.high)}
         . Nivel calculado por la API.
       </p>
-      <p className="small muted mt-3">
-        {data.probability_scope}. {data.scope}.
-      </p>
-      <Warning />
     </Card>
   );
 }
@@ -80,7 +76,7 @@ export function ClusterResult({ data }: { data: Assignment }) {
       </dl>
       <p className="small muted">
         Agrupación exploratoria, sin equivalencia automática con riesgo de
-        abandono. {data.scope}.
+        abandono.
       </p>
     </Card>
   );

@@ -1189,3 +1189,386 @@ summary {
     animation: none !important;
   }
 }
+
+/* Academic profile: original UCI values, presentation on the native scales. */
+.student-profile-header {
+  border-top: 4px solid #3478d6;
+  padding: 25px 28px 0;
+}
+.profile-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.profile-heading .experimental {
+  margin-left: auto;
+}
+.profile-heading h1 {
+  font-size: 28px;
+}
+.profile-heading .eyebrow {
+  margin-bottom: 5px;
+}
+.profile-heading p {
+  margin-top: 7px;
+}
+.profile-emblem {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  background: #eaf2ff;
+  border: 1px solid #d9e6fa;
+  border-radius: 12px;
+  color: #326dc0;
+}
+.observed-state {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin: 23px 0;
+  padding: 17px 19px;
+  background: #f7f9fd;
+  border-radius: 7px;
+  border: 1px solid #e6ecf5;
+}
+.observed-state h2 {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.profile-nav {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  border-top: 1px solid #e6ecf5;
+  padding: 15px 0;
+}
+.profile-nav a {
+  color: #42658d;
+  font-size: 12px;
+  font-weight: 600;
+}
+.profile-nav a:hover {
+  color: #2366be;
+  text-decoration: underline;
+}
+.variable-overview h2 {
+  font-size: 12px;
+  color: #6a7d95;
+}
+.profile-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(340px, 1fr);
+  gap: 23px;
+  align-items: start;
+}
+.academic-column,
+.predictive-column {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  min-width: 0;
+}
+.semester-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.semester-grade {
+  padding: 19px;
+  border-top: 3px solid #79a2d9;
+}
+.semester-grade .feature-list {
+  margin: 0;
+}
+.semester-grade .feature-list > div {
+  display: block;
+  padding: 0;
+}
+.semester-grade dt {
+  font-size: 12px;
+  font-weight: 600;
+}
+.semester-grade dt svg {
+  display: inline;
+  vertical-align: middle;
+  margin-right: 6px;
+  color: #5b83b8;
+}
+.semester-grade .feature-list dt small {
+  font-size: 9px;
+  margin-top: 9px;
+  font-weight: 400;
+}
+.semester-grade .feature-list dd {
+  font-size: clamp(21px, 2vw, 29px);
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  color: #214775;
+  margin-top: 18px;
+  white-space: normal;
+}
+.grade-context {
+  font-size: 11px;
+  margin-top: 12px;
+}
+.academic-chart {
+  height: 205px;
+  margin: 18px 0 12px;
+}
+.semester-title {
+  margin: 0;
+}
+.curricular-description {
+  margin-bottom: 15px;
+}
+.predict-button {
+  margin-top: 18px;
+  width: 100%;
+  white-space: normal;
+}
+.prediction-card {
+  border-top: 3px solid #3478d6;
+}
+.prediction-card .result-status {
+  margin-top: 16px;
+}
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #28734d;
+  background: #edf8f1;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 12px;
+  font-size: 12px;
+}
+.risk-indicator {
+  --risk-color: #27764f;
+  --risk-soft: #e9f6ee;
+}
+.risk-indicator.level-medium {
+  --risk-color: #9b6c14;
+  --risk-soft: #fff5dc;
+}
+.risk-indicator.level-high {
+  --risk-color: #b43d4a;
+  --risk-soft: #fcebed;
+}
+.risk-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 22px;
+  gap: 12px;
+}
+.risk-heading .eyebrow {
+  color: #6b7f98;
+  margin-bottom: 9px;
+}
+.traffic-light {
+  display: flex;
+  gap: 7px;
+  padding: 9px;
+  border: 1px solid #dce4ef;
+  background: #f5f8fc;
+  border-radius: 25px;
+}
+.light {
+  width: 15px;
+  height: 15px;
+  background: #d9e0e8;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+.light-low.active {
+  background: #2b8c5e;
+  border-color: #c3e5d2;
+}
+.light-medium.active {
+  background: #d99722;
+  border-color: #f6dca5;
+}
+.light-high.active {
+  background: #c34654;
+  border-color: #f3c8cc;
+}
+.risk-probability {
+  margin: 18px 0 13px;
+}
+.risk-probability strong {
+  display: block;
+  font-size: 38px;
+  font-weight: 750;
+  letter-spacing: -1px;
+  color: var(--risk-color);
+}
+.risk-probability span {
+  color: #647a95;
+  font-size: 12px;
+}
+.risk-meter {
+  height: 11px;
+  border-radius: 8px;
+  background: var(--risk-soft);
+  overflow: hidden;
+}
+.risk-meter > span {
+  display: block;
+  height: 100%;
+  background: var(--risk-color);
+  border-radius: 8px;
+}
+.attribute-accordions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+}
+.attribute-group {
+  margin: 0;
+  padding: 18px 20px;
+}
+.attribute-group summary {
+  font-size: 13px;
+  color: #294c77;
+}
+.attribute-group summary span {
+  font-size: 10px;
+  color: #71849d;
+  margin-left: 12px;
+  font-weight: 400;
+}
+.field-description {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: #6e819a;
+  line-height: 1.5;
+  margin-top: 7px;
+}
+.profile-skeleton {
+  display: grid;
+  gap: 23px;
+}
+.skeleton-block {
+  min-height: 155px;
+  background: linear-gradient(110deg, #e7edf5 10%, #f8fafd 40%, #e7edf5 70%);
+  border: 1px solid #e0e7f0;
+  border-radius: 9px;
+}
+.skeleton-header {
+  min-height: 205px;
+}
+.skeleton-chart {
+  min-height: 280px;
+  margin-top: 20px;
+}
+#academic-summary,
+#risk-evaluation,
+#student-attributes {
+  scroll-margin-top: 20px;
+}
+@media (max-width: 1200px) {
+  .profile-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .predictive-column {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+@media (max-width: 650px) {
+  .student-profile-header {
+    padding: 20px 17px 0;
+  }
+  .profile-heading {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .profile-heading .experimental {
+    margin-left: 0;
+  }
+  .profile-heading h1 {
+    font-size: 24px;
+  }
+  .profile-emblem {
+    width: 44px;
+    height: 44px;
+  }
+  .observed-state {
+    flex-direction: column;
+    align-items: start;
+    padding: 14px;
+  }
+  .profile-nav {
+    gap: 12px 18px;
+  }
+  .profile-nav a {
+    font-size: 11px;
+  }
+  .semester-summary-grid,
+  .predictive-column,
+  .attribute-accordions {
+    grid-template-columns: 1fr;
+  }
+  .semester-grade .feature-list dd {
+    font-size: 29px;
+  }
+  .variable-overview {
+    gap: 6px;
+  }
+  .attribute-group summary span {
+    display: block;
+    margin-left: 0;
+    margin-top: 5px;
+  }
+  .profile-columns {
+    gap: 20px;
+  }
+}
+.academic-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin-top: 20px;
+}
+.academic-filter-grid label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.academic-filter-grid select {
+  width: 100%;
+  min-height: 40px;
+  font-size: 12px;
+  white-space: normal;
+}
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+.filter-chip {
+  background: #edf4ff;
+  border: 1px solid #cedff5;
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: #315c95;
+  font-size: 11px;
+  text-align: left;
+}
+.filter-chip span {
+  margin-left: 8px;
+}
+@media (max-width: 650px) {
+  .academic-filter-grid {
+    grid-template-columns: 1fr;
+  }
+}

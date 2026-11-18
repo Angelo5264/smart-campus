@@ -1,6 +1,13 @@
 export type Target = "Dropout" | "Graduate" | "Enrolled";
 export type Risk = "LOW" | "MEDIUM" | "HIGH";
 export interface StudentList {
+  academic_summary?: {
+    total: number;
+    complete: number;
+    partial: number;
+    none: number;
+  };
+  summary_scope?: string;
   items: { id: number; source: string }[];
   page: number;
   per_page: number;
@@ -11,7 +18,7 @@ export interface Student {
   source: string;
   identity: string;
   observed_target: Target;
-  features: Record<string, number>;
+  features: Partial<Record<string, number | null>>;
 }
 export interface Summary {
   students: number;

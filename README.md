@@ -39,9 +39,9 @@ Los comandos de inicialización y entrenamiento son explícitos: la API no desca
 Datos y modelos quedan en `data/` y `ml/artifacts/`, montados en los contenedores y excluidos de Git; la base usa un volumen persistente. Tras reentrenar reinicie la API: cada proceso cachea los artefactos. Cargue únicamente artefactos joblib creados por estos scripts y con las mismas dependencias. `docker compose down` detiene la demo y conserva la base.
 
 
-## Interfaz web — Entrega D
+## Interfaz web — Entregas D y E
 
-Abra **http://localhost:5173/dashboard** después de `docker compose up --build -d` y de preparar los datos/modelos. Incluye dashboard, estudiantes paginados, detalle con 36 variables, predicciones, perfiles K-Means y métricas. La interfaz consume la API existente y muestra resultados experimentales sin inferir datos adicionales.
+Abra **http://localhost:5173/dashboard** después de `docker compose up --build -d` y de preparar los datos/modelos. Incluye dashboard, estudiantes paginados, detalle con 36 variables, predicciones, perfiles K-Means y métricas. La interfaz consume la API existente y muestra resultados experimentales sin inferir datos adicionales. La Entrega E mejora `/students/:id` con notas semestrales sobre 20, evolución, actividad curricular, atributos desplegables y semáforo predictivo con persistencia.
 
 Para desarrollar sin el contenedor web:
 
@@ -79,7 +79,7 @@ Base: `http://localhost:5000/api/v1`. JSON; sin autenticación para esta demo lo
 | Método | Ruta | Resultado |
 |---|---|---|
 | GET | `/health` | Estado y conexión SQL |
-| GET | `/students?page=1&per_page=20` | IDs paginados; máximo 100 |
+| GET | `/students?page=1&per_page=20` | IDs paginados y filtros de disponibilidad; máximo 100 |
 | GET | `/students/{id}` | 36 variables y etiqueta observada, separada de predicciones |
 | POST | `/predictions` | Probabilidad experimental, semáforo y persistencia |
 | GET | `/predictions/{student_id}` | Última predicción; leer no calcula otra |
@@ -92,6 +92,7 @@ Ambos POST aceptan **exclusivamente** `{"student_id": 1}` o `{"features": {...}}
 
 ```bash
 curl -fsS 'http://localhost:5000/api/v1/students?per_page=2'
+curl -fsS 'http://localhost:5000/api/v1/students?academic_data=complete&semester_availability=both&evaluation_status=with&evaluation_semester=first'
 curl -fsS http://localhost:5000/api/v1/students/1
 curl -fsS -X POST http://localhost:5000/api/v1/predictions \
   -H 'Content-Type: application/json' -d '{"student_id":1}'
@@ -102,6 +103,19 @@ curl -fsS http://localhost:5000/api/v1/clusters
 curl -fsS http://localhost:5000/api/v1/analytics/summary
 curl -fsS http://localhost:5000/api/v1/models/metrics
 ```
+
+### Filtros de disponibilidad académica
+
+`GET /students` conserva su contrato de listado y admite estos parámetros opcionales. Los filtros se aplican en PostgreSQL antes de paginar; `academic_summary` siempre resume la cohorte completa, no solo el resultado filtrado.
+
+| Parámetro | Valores |
+|---|---|
+| `academic_data` | `all`, `complete`, `partial`, `none` |
+| `semester_availability` | `all`, `first_only`, `second_only`, `both`, `none` |
+| `evaluation_status`, `approval_status` | `all`, `with`, `without`, `zero`, `unknown` |
+| `evaluation_semester`, `approval_semester` | `any`, `first`, `second` |
+
+La disponibilidad usa las ocho variables curriculares reales: matriculadas, aprobadas, evaluaciones y nota de cada semestre. Un número, incluido `0`, está disponible; `NULL`, clave ausente, valor vacío, texto o booleano no lo están. `complete` requiere los ocho números, `partial` entre uno y siete y `none` ninguno. Un semestre está disponible si al menos uno de sus cuatro campos es numérico. Los estados «con» evalúan al menos un conteo positivo en el semestre elegido; «sin» significa que no hay positivos, `zero` exige ceros conocidos en todos los campos seleccionados y `unknown` señala algún campo no disponible. Estos criterios describen registros, no la etapa académica.
 
 POST exitoso: 201; entrada inválida: 400; tipo de contenido incorrecto: 415; inexistente/sin predicción: 404; base o modelo no disponible: 503. Errores JSON con `error.code` y `error.message`. Sin modelo no se fabrican probabilidades. Fechas ISO 8601 UTC. Modelo/versión y métricas se registran en `model_runs` en la primera inferencia de esa versión; predicciones y clusters guardan esa referencia, resultado y fecha. El historial se conserva; el endpoint de predicciones devuelve el último registro.
 

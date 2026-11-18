@@ -70,6 +70,8 @@ test("navegación, paginación, predicción y cluster reales", async ({
     .getByRole("navigation")
     .getByRole("link", { name: "Predicciones", exact: true })
     .click();
+  // Wait for the destination before filling an input also present on the previous route.
+  await expect(page.getByRole("heading", { name: "Predicciones de abandono", exact: true })).toBeVisible();
   await page.getByLabel("ID de estudiante").fill("1");
   await page.getByRole("button", { name: "Consultar estudiante" }).click();
   await expect(
@@ -85,6 +87,8 @@ test("navegación, paginación, predicción y cluster reales", async ({
     .getByRole("navigation")
     .getByRole("link", { name: "Perfiles académicos", exact: true })
     .click();
+  // Wait for the destination before filling an input also present on the previous route.
+  await expect(page.getByRole("heading", { name: "Perfiles académicos", exact: true })).toBeVisible();
   await page.getByLabel("ID de estudiante").fill("1");
   await page.getByRole("button", { name: "Seleccionar", exact: true }).click();
   await page

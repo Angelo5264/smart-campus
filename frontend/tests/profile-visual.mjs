@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch({headless:true});
+const page = await browser.newPage({viewport:{width:1440,height:1050},deviceScaleFactor:1});
+const base = process.env.E2E_BASE_URL || 'http://127.0.0.1:5173';
+await page.goto(`${base}/students/2`);
+await page.getByTestId('grade-1st').waitFor();
+await page.getByRole('button',{name:'Calcular riesgo de deserción'}).click();
+await page.getByText('Predicción guardada correctamente.').waitFor();
+await page.screenshot({path:'/tmp/smartcampus-profile-desktop.png',fullPage:true,animations:'disabled'});
+await page.setViewportSize({width:390,height:844});
+await page.screenshot({path:'/tmp/smartcampus-profile-mobile.png',fullPage:true,animations:'disabled'});
+await browser.close();

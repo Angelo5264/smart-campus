@@ -9,6 +9,10 @@ import type {
   StudentList,
   Summary,
 } from "../types";
+import { featureGroups } from "../utils/features";
+const studentFeatureNames = new Set(
+  featureGroups.flatMap((group) => Object.keys(group.fields)),
+);
 type Check = (value: unknown) => boolean;
 const object = (v: unknown): v is Record<string, unknown> =>
   typeof v === "object" && v !== null && !Array.isArray(v);
@@ -81,6 +85,14 @@ export const students = decoder<StudentList>(
     page: integer,
     per_page: integer,
     total: integer,
+    academic_summary: (v) =>
+      v === undefined ||
+      shape({
+        total: integer,
+        complete: integer,
+        partial: integer,
+        none: integer,
+      })(v),
   }),
 );
 export const student = decoder<Student>(
@@ -90,7 +102,9 @@ export const student = decoder<Student>(
     identity: string,
     observed_target: oneOf("Dropout", "Enrolled", "Graduate"),
     features: (v) =>
-      record(number)(v) && Object.keys(v as object).length === 36,
+      record((value) => value === null || number(value))(v) &&
+      Object.keys(v as object).length > 0 &&
+      Object.keys(v as object).every((key) => studentFeatureNames.has(key)),
   }),
 );
 export const summary = decoder<Summary>(

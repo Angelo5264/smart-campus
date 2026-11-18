@@ -136,3 +136,62 @@ PLAYWRIGHT_BROWSERS_PATH=/tmp/smartcampus-browsers node frontend/tests/visual-ch
 Entrega D1–D4 funcional y verificada. Acceso: **http://localhost:5173/dashboard**. Solo loopback; no publicación externa. Se añadieron frontend/, servicio web en docker-compose.yml y exclusión del frontend en el build de Python; README principal y frontend/README.md actualizados. No se añadieron servicios externos ni autenticación.
 
 Persisten las limitaciones científicas de A–C y el alcance solicitado: sin validación para Piura, sin calibración, datos de segundo semestre, sin historial completo ni estadística global de riesgo, sin autenticación, roles, LMS, push, intervenciones o reentrenamiento web. Los códigos categóricos se muestran como códigos; no hay filtro por nombres o instituciones inexistentes. La asignación de cluster se persiste por Flask pero la API no ofrece consulta de última asignación: la UI solo muestra la respuesta del cálculo actual. Los E2E generan registros reales adicionales de predicción/asignación; los fallos se simulan solo en el navegador de pruebas. Las capturas y fixtures corresponden a registros públicos anónimos UCI, nunca datos institucionales de personas identificadas.
+
+## Diagnóstico de arranque solicitado por el usuario
+
+Se reprodujeron los errores: `docker compose` no disponible en la instalación estándar; `.venv/bin/python run.py` falla porque Docker ya ocupa 5000; `npm run dev --prefix frontend` falla porque Docker ya ocupa 5173. Se confirmó que db/api/web están healthy y que `/api/v1/health` y `/api/v1/students?per_page=1` responden desde el proxy web con 4,424 registros. Se dejaron los contenedores activos y se documentaron los modos Docker y Python/Vite, mutuamente excluyentes en esos puertos, al inicio de frontend/README.md.
+
+## Ajuste del aviso de predicción
+
+A petición del usuario se retiró el aviso largo «Esta predicción es experimental… Requiere evaluación humana» de Predicciones y de la tarjeta compartida de resultados. Se conserva EXPERIMENTAL y la sección de limitaciones de modelos. No se modificaron datos, artefactos ni lógica de inferencia. Se reconstruye la web local para aplicar el cambio.
+
+Revisión del cambio de dataset: la auditoría actual exige UCI 697 (4,424 filas, 36 variables y Target); el importador rechaza un CSV distinto cuando ya existe otra versión en la base. Otro dataset requiere adaptar el contrato y la auditoría, entrenar/evaluar nuevos modelos y separar o migrar la cohorte. No se borraron datos.
+
+Verificación final del aviso: build local y Docker aprobados. El contenedor web reconstruido no se inició porque 5173 está ocupado por Vite del usuario; se conservó esa sesión. Se confirmó por HTTP que Vite sirve el componente actualizado sin Warning y que el proxy `/api/v1/health` responde UP para Flask y base de datos. No es necesario iniciar Docker web mientras se utiliza Vite. No se borró ni reemplazó el dataset.
+
+## Simplificación de avisos en la interfaz
+
+Por solicitud del usuario se retiró el banner del dashboard sobre revisión humana/validación, la tarjeta de limitaciones de Modelos y los párrafos scope/probability_scope en resultados. Las limitaciones permanecen en los README; se mantiene la procedencia EXPERIMENTAL, las métricas y las distinciones entre etiquetas observadas, predicción y perfiles. Build TypeScript/Vite aprobado y módulos activos de Vite verificados por HTTP. No se modificaron modelos ni datos.
+
+## Entrega E — ficha académica y semáforo predictivo
+
+Implementada sobre `/students/:id`, conservando Flask, PostgreSQL, RF, K-Means, dataset y endpoints. La instrucción más reciente de Entrega E exige nuevamente una advertencia científica visible: se incluye en la tarjeta predictiva, sin restaurar el banner del dashboard.
+
+### Implementación
+
+- Encabezado académico con ID interno, fuente UCI 697, etiqueta histórica y registro EXPERIMENTAL; sin identidad inventada.
+- Dos promedios con dos decimales en escala nativa 0–20. Contexto explícito para ceros (evaluaciones/aprobaciones); faltantes/nulos no se convierten a cero. Gráfico con eje 0–20, sin dibujar una comparación si falta un promedio.
+- Actividad curricular de ambos semestres: matriculadas, aprobadas, acreditadas, evaluaciones y sin evaluación. No se equiparan unidades UCI a cursos peruanos.
+- Cuatro desplegables accesibles con 24 variables complementarias; todas las 36 variables siguen presentes. Admisión/calificación previa sobre 200, tasas en porcentaje y edad en años según el diccionario local descargado de UCI. PIB conserva valor sin unidad inventada.
+- `RiskIndicator`: semáforo LOW/MEDIUM/HIGH tomado de Flask, porcentaje, barra con atributos ARIA, modelo, versión, fecha, umbrales provisionales y alcance científico.
+- `PredictionCard`: consulta por GET, POST solo bajo acción, botón bloqueado durante petición, actualización de caché, invalidación de última predicción y confirmación de guardado. Se cancela una consulta pendiente antes del POST para evitar que sobrescriba la respuesta. 404 muestra ausencia; 503 no genera probabilidades. Si falla un recálculo, se identifica el último resultado como anterior.
+- Skeleton, navegación interna, regreso al listado, diseño responsive, agrupamiento K-Means existente conservado.
+- Campos ausentes/nulos se toleran en la capa de presentación, manteniendo rechazo de tipos inesperados y claves desconocidas. La API/inferencia siguen validando los datos originales; no se completan ni alteran registros.
+
+### Archivos
+
+Nuevos componentes en frontend/src/components/students/: StudentProfileHeader, AcademicSummary, SemesterPerformance, AcademicProgressChart, StudentAttributes, RiskIndicator, PredictionCard y StudentProfileSkeleton. Nueva utilidad academic.ts y pruebas StudentProfile.test.tsx/profile.spec.ts; fixture student2.json capturado de Flask, sin inventar notas. Modificados StudentDetailPage.tsx, hooks/queries.ts, types/index.ts, api/validate.ts, utils/features.ts, styles.css y documentación. Capturas verificadas: reports/frontend-profile-desktop.png y reports/frontend-profile-mobile.png.
+
+### Verificación ejecutada
+
+- Lectura de README, PROGRESS, instrucciones, código existente y diccionario data/raw/variables.json; GET reales de estudiante y última predicción por proxy Vite.
+- `npm run build --prefix frontend`: TypeScript estricto y Vite aprobados.
+- `npm test --prefix frontend`: **24 passed** (12 anteriores + 12 nuevas), sin eliminar pruebas previas. Cobertura de notas reales sobre 20, ceros/faltantes, escala de admisión, LOW/MEDIUM/HIGH, Graduate observado frente a HIGH estimado, POST por ID, invalidación, confirmación, 404/503 y skeleton.
+- `.venv/bin/pytest -q`: **15 passed**, pruebas originales del backend sin modificar.
+- `PLAYWRIGHT_BROWSERS_PATH=/tmp/smartcampus-browsers npm run test:e2e --prefix frontend`: **5 passed**. Conserva tres recorridos previos y añade persistencia tras recarga, teclado en los cuatro desplegables, 36 variables, notas originales y fallos 404/503.
+- Se corrigió una carrera de sincronización del E2E anterior: al navegar entre formularios con el mismo label, llenaba el campo de la pantalla anterior antes de completar la transición. Se añadió la espera explícita por el encabezado de destino, manteniendo todas las aserciones. No se ocultó un fallo de producto ni se aumentaron timeouts.
+- `PLAYWRIGHT_BROWSERS_PATH=/tmp/smartcampus-browsers node frontend/tests/profile-visual.mjs`: revisión escritorio 1440 px/móvil 390 px; estudiante 2 real (14.00 y 13.67 sobre 20), sin desbordamiento. El cálculo mostrado fue solicitado a Flask, no fijado en código.
+
+### Estado final y límites
+
+Ficha activa en Vite: http://localhost:5173/students/1. No se detuvo la sesión de desarrollo del usuario ni se intentó iniciar otra web en el mismo puerto. Build estático actualizado en frontend/dist. No se reentrenaron modelos, no se alteraron datos UCI, no se reconstruyó la base, no se añadieron dependencias ni se cambiaron endpoints. Los recorridos de integración crean las predicciones/asignaciones reales que verifican.
+
+Sin pendientes funcionales de Entrega E. Se mantienen los límites científicos, autenticación fuera de alcance y ausencia de endpoint de consulta de cluster individual anterior: se muestra la respuesta de la asignación actual, sin simular una recuperación. La adaptación a terminología peruana es exclusivamente visual.
+
+## Filtros de disponibilidad académica — estudiantes
+
+- `GET /api/v1/students` mantiene el listado anterior y ahora filtra en SQL antes de paginar con `academic_data`, `semester_availability`, `evaluation_status`, `approval_status` y sus alcances de semestre.
+- Los ocho valores curriculares reales distinguen número (incluido cero), `NULL`, clave ausente, vacío y tipo no numérico. Completa = ocho números; parcial = uno a siete; sin información = ninguno. La disponibilidad de un semestre no se interpreta como etapa académica.
+- La pantalla `/students` incluye selectores combinables, chips activos, limpieza, URL persistente, mensaje vacío y cuatro tarjetas globales calculadas por la API. La fuente importada actual tiene 4,424 registros completos, 0 parciales y 0 sin información con este criterio.
+- Se retiró el aviso de revisión/validación de la ficha, como pidió el usuario; el semáforo, la persistencia y sus datos no cambiaron.
+- Verificación: `.venv/bin/pytest -q` **39 passed** (SQLite y PostgreSQL, casos cero/NULL/ausente/vacío/no numérico, combinaciones y tres consultas SQL fijas) y `npm run build --prefix frontend && npm test --prefix frontend -- --run` (**27 passed**).

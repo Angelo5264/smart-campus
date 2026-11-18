@@ -17,6 +17,12 @@ import {
 } from "../components/common/UI";
 import { StudentPicker } from "../components/common/StudentPicker";
 import { count } from "../utils/format";
+import { StudentFilters } from "../components/students/StudentFilters";
+import {
+  readStudentFilters,
+  filterDefinitions,
+  type FilterKey,
+} from "../utils/studentFilters";
 export function StudentsPage() {
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
@@ -24,12 +30,32 @@ export function StudentsPage() {
   const page = Number.isSafeInteger(rawPage) && rawPage > 0 ? rawPage : 1;
   const rawSize = Number(params.get("size") || 20);
   const size = [10, 20, 50].includes(rawSize) ? rawSize : 20;
+  const filters = readStudentFilters(params);
   const query = useQuery({
-    queryKey: ["students", page, size],
-    queryFn: () => getStudents(page, size),
+    queryKey: ["students", page, size, filters],
+    queryFn: () => getStudents(page, size, filters),
   });
+  const updateParams = (values: Record<string, string>) => {
+    const next = new URLSearchParams(params);
+    Object.entries(values).forEach(([key, value]) => next.set(key, value));
+    setParams(next);
+  };
   const changePage = (value: number) =>
-    setParams({ page: String(value), size: String(size) });
+    updateParams({ page: String(value), size: String(size) });
+  const changeFilter = (key: FilterKey, value: string) => {
+    const next = new URLSearchParams(params);
+    next.set("page", "1");
+    if (value === filterDefinitions.find((f) => f.key === key)?.defaultValue)
+      next.delete(key);
+    else next.set(key, value);
+    setParams(next);
+  };
+  const clearFilters = () => {
+    const next = new URLSearchParams(params);
+    filterDefinitions.forEach((f) => next.delete(f.key));
+    next.set("page", "1");
+    setParams(next);
+  };
   return (
     <>
       <PageHeading
@@ -51,10 +77,38 @@ export function StudentsPage() {
           label="Abrir detalle"
         />
       </Card>
+      <StudentFilters
+        filters={filters}
+        onChange={changeFilter}
+        onClear={clearFilters}
+      />
+      {query.data?.academic_summary && (
+        <section aria-label="Disponibilidad académica global">
+          <p className="small muted mb-3">
+            Conteos de todos los estudiantes importados, independientes de los
+            filtros.
+          </p>
+          <div className="stats-grid">
+            {(
+              [
+                ["total", "Total de estudiantes"],
+                ["complete", "Con información académica"],
+                ["partial", "Información académica parcial"],
+                ["none", "Sin información académica"],
+              ] as const
+            ).map(([key, label]) => (
+              <Card className="stat-card" key={key}>
+                <div>{label}</div>
+                <strong>{count(query.data.academic_summary![key])}</strong>
+              </Card>
+            ))}
+          </div>
+        </section>
+      )}
       <Card className="table-card">
         <div className="table-heading">
           <h2>
-            Registros importados{" "}
+            Resultados{" "}
             {query.data && (
               <span className="subtle-tag">{count(query.data.total)}</span>
             )}
@@ -63,7 +117,9 @@ export function StudentsPage() {
             Por página{" "}
             <select
               value={size}
-              onChange={(e) => setParams({ page: "1", size: e.target.value })}
+              onChange={(e) =>
+                updateParams({ page: "1", size: e.target.value })
+              }
             >
               {[10, 20, 50].map((n) => (
                 <option key={n}>{n}</option>
@@ -139,7 +195,11 @@ export function StudentsPage() {
               </table>
             </div>
             {!query.data.items.length && (
-              <Empty>No hay registros en esta página.</Empty>
+              <Empty>
+                {Object.keys(filters).length
+                  ? "No hay coincidencias en esta página para los filtros seleccionados."
+                  : "No hay registros en esta página."}
+              </Empty>
             )}
             <div className="pagination">
               <span>

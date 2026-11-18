@@ -18,7 +18,6 @@ import {
   Card,
   Empty,
   ErrorState,
-  Experimental,
   Loading,
   PageHeading,
 } from "../components/common/UI";
@@ -58,21 +57,6 @@ export function DashboardPage() {
           </button>
         }
       />
-      <div className="research-banner">
-        <div className="research-icon">
-          <GraduationCap size={25} />
-        </div>
-        <div>
-          <strong>
-            Información para comprender, no para decidir automáticamente.
-          </strong>
-          <p>
-            Dataset de educación superior portuguesa. Los modelos requieren
-            revisión humana y no están validados para Piura.
-          </p>
-        </div>
-        <Experimental />
-      </div>
       {summary.isPending ? (
         <Loading />
       ) : summary.isError ? (

@@ -188,32 +188,6 @@ export function ModelsPage() {
           </div>
         </>
       )}
-      <Card>
-        <h2>Alcance y limitaciones</h2>
-        <ul className="limitations">
-          <li>
-            Dataset de educación superior portuguesa; sin validación
-            institucional en Piura.
-          </li>
-          <li>
-            Evaluación experimental con división aleatoria, no validación
-            temporal ni externa.
-          </li>
-          <li>
-            Probabilidades sin calibración; la comparación binaria excluye
-            Enrolled.
-          </li>
-          <li>
-            Incluye variables del segundo semestre: solo aplicable cuando esa
-            información existe.
-          </li>
-          <li>No hay integración con Moodle ni datos de asistencia diaria.</li>
-          <li>
-            La inferencia sobre registros usados en entrenamiento es una
-            demostración, no una evaluación independiente.
-          </li>
-        </ul>
-      </Card>
     </>
   );
 }

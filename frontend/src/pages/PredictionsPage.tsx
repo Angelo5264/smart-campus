@@ -7,7 +7,6 @@ import {
   ErrorState,
   Loading,
   PageHeading,
-  Warning,
 } from "../components/common/UI";
 import { StudentPicker } from "../components/common/StudentPicker";
 import { PredictionResult } from "../components/common/Results";
@@ -24,7 +23,6 @@ export function PredictionsPage() {
         title="Predicciones de abandono"
         description="Consulta el último resultado guardado o solicita un nuevo cálculo a Random Forest."
       />
-      <Warning />
       <Card>
         <h2>Seleccionar estudiante</h2>
         <StudentPicker
